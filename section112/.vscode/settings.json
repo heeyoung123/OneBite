@@ -1,0 +1,5 @@
+{
+    "liveSassCompile.settings.compileOnWatch": true,
+    "liveServer.settings.fullReload": true,
+    "liveSassCompile.settings.autoprefix": []
+}
