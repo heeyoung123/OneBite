@@ -19,6 +19,28 @@ function App() {
   return (
     <>
       <Button
+        text={"<"}
+        type={"PREVIOUS"}
+        onClick={() => {
+          nav("/diary/3");
+        }}
+      />
+      <Button
+        text={">"}
+        type={"NEXT"}
+        onClick={() => {
+          nav("/dairy/5");
+        }}
+      />
+
+      <Button
+        text={"버튼임"}
+        type={"DEFAULT"}
+        onClick={() => {
+          nav("/diary/4");
+        }}
+      />
+      <Button
         text={"버튼임"}
         type={"POSITIVE"}
         onClick={() => {
@@ -27,16 +49,8 @@ function App() {
       />
 
       <Button
-        text={"버튼임2"}
+        text={"버튼임"}
         type={"NEGATIVE"}
-        onClick={() => {
-          nav("/diary/4");
-        }}
-      />
-
-      <Button
-        text={"버튼임3"}
-        type={"DEFAULT"}
         onClick={() => {
           nav("/diary/4");
         }}
