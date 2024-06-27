@@ -9,3 +9,42 @@
 * :root: HTML 문서의 루트 요소인 <html>을 선택합니다. 주로 CSS 커스텀 속성을 정의하는 데 사용됩니다.
 * #root: id가 "root"인 특정 요소를 선택합니다. 주로 SPA의 렌더링 타겟으로 사용됩니다.
 * min-height: 100vh -> 현재 브라우저의 스크린 크기  
+
+*useParams
+*new Date().getTime()
+*state.filter((item)=>item.id !==action.id)
+->filter메서드를 이용해서 아이템 중에 아이템의 id가 action.id와 같지 않은 요소들만 필터링해서 리턴해줌
+->배열을 순회하면서 조건에 맞는 아이템들만 포함한 새로운 배열을 만듬
+->item의 id가 action.id와 일치하지 않는 item들만 남김, action.id와 같은 id를 가진 아이템은 제외함
+*createContext -> 컴포넌트 트리 전반에 걸쳐 데이터를 전달할 수 있게 해줌  prop을 일일이 전달하지 않고도 데이터를 사용할 수 있음
+                  테마, 사용자 정보, 인증 상태 등의 전역 데이터를 관리하는데 사용
+ *createContext 사용법
+  1.context 생성
+  const MyContext=createContext();
+  2.Provider 컴포넌트 생성
+    const MyProvider =({children}) => {
+        const [value, setValue]=useState("Hi");
+        return (
+            <MyContext.Provider value ={{value,setValue}}>
+            {children}
+            </MyContext.Provider>
+        )
+    }             
+    3.Context Consumer, useContext  훅 사용
+    const MyComponent =() =>{
+        const {value, setValue} =useContext(MyContext);
+        return (
+            <div>
+            <p>{value}</p>
+            <button onClick={()=>setValue('Hello')}>Change Value</button>
+            </div>
+        )
+    }  
+    4.Provider로 컴포넌트 감싸기
+    const App =() =>{
+        return (
+            <MyProbider>
+            <MyComponent />
+            </MyProbider>
+        )
+    }

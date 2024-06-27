@@ -1,77 +1,110 @@
 import "./App.scss";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Diary from "./pages/Diary";
 import New from "./pages/New";
 import Notfound from "./pages/Notfound";
-import Button from "./components/button";
-import { getEmotionImage } from "./util/get-emotion-image";
+import Edit from "./pages/Edit";
+
+import { useReducer, useRef, createContext } from "react";
+// import { getEmotionImage } from "./util/get-emotion-image";
 
 //1."/":
 //2."/new"
 //3."/diary"
 
+//임시 데이터
+const mockData = [
+  {
+    id: 1,
+    createDate: new Date().getTime(),
+    emotionId: 2,
+    content: "일기당",
+  },
+  {
+    id: 2,
+    createDate: new Date().getTime(),
+    emotionId: 3,
+    content: "2번일기임 ",
+  },
+];
+
+//실행
+function reducer(state, action) {
+  switch ((action, type)) {
+    case "CREATE":
+      return [action.data, ...state];
+    case "UPDATE":
+      return state.map((item) =>
+        String(item.id) === String(action.data.id) ? action.data : item
+      );
+    case "DELETE":
+      return state.filter((item) => String(item.id) !== String(action.id));
+    case "DEFAULT":
+      return state;
+  }
+}
+//일기 데이터를 공급할 컨텍스트 생성
+const DiaryStateContext = createContext();
+const DiaryDispatchContext = createContext();
+
 function App() {
-  const nav = useNavigate();
-  const onClickButton = () => {
-    nav("/new");
+  //mockData라는 임시데이터를 만들고 초기값으로 설정
+  const [data, dispatch] = useReducer(reducer, [mockData]);
+  const idRef = useRef(3);
+
+  // 새로운 일기 추가
+  // 새로운 일기를 추가하는 기능
+  // dispatch 함수를 호출하면서 이러한 액션 객체를 새롭게 추가하라는 의미로 전달을 해주게 되면
+  // useReducer가 우리가 만든 이 reduce함수를 호출해서 매개 변수로는 설정한 액션 객체를 전달을 해주게 됨
+
+  const onCreate = (createdDate, emotionId, content) => {
+    dispatch({
+      type: "CREATE",
+      data: {
+        id: idRef.current++,
+        createdDate,
+        emotionId,
+        content,
+      },
+    });
   };
+
+  // 기존 일기 수정
+  const onUpdate = (id, createDate, emotionId, content) => {
+    dispatch({
+      type: "UPDATE",
+      data: {
+        id: idRef.current,
+        createDate,
+        emotionId,
+        content,
+      },
+    });
+  };
+
+  // 기존 일기 삭제
+  // id만 알고 있으면 삭제가 가능하기때문에 id만 받아옴
+  const onDelete = (id) => {
+    dispatch({
+      type: "DELETE",
+      id,
+    });
+  };
+
   return (
     <>
-      <Button
-        text={"<"}
-        type={"PREVIOUS"}
-        onClick={() => {
-          nav("/diary/3");
-        }}
-      />
-      <Button
-        text={">"}
-        type={"NEXT"}
-        onClick={() => {
-          nav("/dairy/5");
-        }}
-      />
-
-      <Button
-        text={"버튼임"}
-        type={"DEFAULT"}
-        onClick={() => {
-          nav("/diary/4");
-        }}
-      />
-      <Button
-        text={"버튼임"}
-        type={"POSITIVE"}
-        onClick={() => {
-          nav("/diary/4");
-        }}
-      />
-
-      <Button
-        text={"버튼임"}
-        type={"NEGATIVE"}
-        onClick={() => {
-          nav("/diary/4");
-        }}
-      />
-
-      <div>
-        <img src={getEmotionImage(1)} />
-      </div>
-      <div>
-        <Link to={"/"}>Home</Link>
-        <Link to={"/new"}>New</Link>
-        <Link to={"/diary"}>Diary</Link>
-      </div>
-
-      <button onClick={onClickButton}>New페이지로 이동</button>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/new" element={<New />} />
-        <Route path="/diary/:id" element={<Diary />} />
-        <Route path="*" element={<Notfound />} />
-      </Routes>
+      <DiaryStateContext.Provider value={data}>
+        <DiaryDispatchContext.Provider value={{ onCreate, onDelete, onUpdate }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/new" element={<New />} />
+            <Route path="/diary/:id" element={<Diary />} />
+            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="*" element={<Notfound />} />
+          </Routes>
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
     </>
   );
 }

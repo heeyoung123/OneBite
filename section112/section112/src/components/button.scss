@@ -1,14 +1,16 @@
 $fontColor: white;
-
-.Button {
+@mixin buttonTheme {
   background-color: rgb(252, 234, 255);
   color: black;
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding: 10px 15px;
+  font-size: 14px;
   white-space: nowrap;
+}
+.Button {
+  @include buttonTheme;
 }
 
 .Button_POSITIVE {
