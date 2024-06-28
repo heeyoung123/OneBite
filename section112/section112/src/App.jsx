@@ -17,21 +17,27 @@ import { useReducer, useRef, createContext } from "react";
 const mockData = [
   {
     id: 1,
-    createDate: new Date().getTime(),
+    createDate: new Date("2024-06-22").getTime(),
     emotionId: 2,
     content: "일기당",
   },
   {
     id: 2,
-    createDate: new Date().getTime(),
+    createDate: new Date("2024-06-20").getTime(),
     emotionId: 3,
     content: "2번일기임 ",
+  },
+  {
+    id: 3,
+    createDate: new Date("2024-05-20").getTime(),
+    emotionId: 1,
+    content: "3 번일기임 ",
   },
 ];
 
 //실행
 function reducer(state, action) {
-  switch ((action, type)) {
+  switch (action.type) {
     case "CREATE":
       return [action.data, ...state];
     case "UPDATE":
@@ -40,17 +46,17 @@ function reducer(state, action) {
       );
     case "DELETE":
       return state.filter((item) => String(item.id) !== String(action.id));
-    case "DEFAULT":
+    default:
       return state;
   }
 }
 //일기 데이터를 공급할 컨텍스트 생성
-const DiaryStateContext = createContext();
-const DiaryDispatchContext = createContext();
+export const DiaryStateContext = createContext();
+export const DiaryDispatchContext = createContext();
 
 function App() {
   //mockData라는 임시데이터를 만들고 초기값으로 설정
-  const [data, dispatch] = useReducer(reducer, [mockData]);
+  const [data, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(3);
 
   // 새로운 일기 추가
