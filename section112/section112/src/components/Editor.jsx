@@ -1,5 +1,6 @@
 import "./Editor.scss";
 import EmotionItem from "./EmotionItem";
+import Button from "./button";
 
 const emotionList = [
   {
@@ -44,7 +45,10 @@ const Editor = () => {
         <h4>오늘의 일기</h4>
         <textarea placeholder="오늘은 어땠나요?" />
       </section>
-      <section className="button_section"></section>
+      <section className="button_section">
+        <Button text={"취소"} />
+        <Button text={"작성완료"} />
+      </section>
     </div>
   );
 };

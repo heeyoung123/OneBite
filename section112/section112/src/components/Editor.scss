@@ -2,16 +2,26 @@
   font-size: 20px;
   font-weight: bold;
 }
+@mixin area {
+  background-color: rgb(236, 236, 236);
+  border: none;
+  color: black;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 10px 20px;
+}
 .Editor {
   @include Editor;
 
   input {
-    background-color: rgb(236, 236, 236);
-    border: none;
-    color: black;
-    border-radius: 5px;
-    font-size: 14px;
-    padding: 10px 20px;
+    @include area;
+  }
+  textarea {
+    @include area;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 200px;
+    resize: vertical;
   }
   .emotion_section {
     .emotion_list_wrapper {
@@ -20,10 +30,8 @@
       gap: 1%;
     }
   }
-  .content_section {
-    textarea {
-      background-color: white;
-      border: none;
-    }
+  .button_section {
+    display: flex;
+    justify-content: space-between;
   }
 }
