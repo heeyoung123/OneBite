@@ -1,14 +1,10 @@
 @mixin Editor {
-  display: flex;
   font-size: 20px;
   font-weight: bold;
 }
 .Editor {
   @include Editor;
 
-  h4 {
-    margin-left: -90px;
-  }
   input {
     background-color: rgb(236, 236, 236);
     border: none;
@@ -16,5 +12,18 @@
     border-radius: 5px;
     font-size: 14px;
     padding: 10px 20px;
+  }
+  .emotion_section {
+    .emotion_list_wrapper {
+      display: flex;
+      justify-content: space-around;
+      gap: 1%;
+    }
+  }
+  .content_section {
+    textarea {
+      background-color: white;
+      border: none;
+    }
   }
 }
