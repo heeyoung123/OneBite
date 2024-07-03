@@ -26,6 +26,8 @@ const emotionList = [
 ];
 
 const Editor = () => {
+  const emotionId = 1;
+
   return (
     <div className="Editor">
       <section className="date_section">
@@ -37,7 +39,11 @@ const Editor = () => {
         <h4>오늘의 감정</h4>
         <div className="emotion_list_wrapper">
           {emotionList.map((item) => (
-            <EmotionItem key={item.emotionId} {...item} />
+            <EmotionItem
+              key={item.emotionId}
+              {...item}
+              isSelected={item.emotionId === emotionId}
+            />
           ))}
         </div>
       </section>
@@ -47,7 +53,7 @@ const Editor = () => {
       </section>
       <section className="button_section">
         <Button text={"취소"} />
-        <Button text={"작성완료"} />
+        <Button text={"작성완료"} type={"POSITIVE"} />
       </section>
     </div>
   );

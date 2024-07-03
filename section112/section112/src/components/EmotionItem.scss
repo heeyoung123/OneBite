@@ -1,8 +1,12 @@
 .EmotionItem {
   cursor: pointer;
+  &.EmotionItem_selected {
+    .emotion_img {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.891);
+    }
+  }
   .emotion_img {
     height: 70px;
-
     transition: width 2s ease-in 0s;
     border-radius: 50%;
     &:hover {

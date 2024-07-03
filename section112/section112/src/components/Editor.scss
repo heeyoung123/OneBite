@@ -12,7 +12,9 @@
 }
 .Editor {
   @include Editor;
-
+  section {
+    margin-bottom: 40px;
+  }
   input {
     @include area;
   }
