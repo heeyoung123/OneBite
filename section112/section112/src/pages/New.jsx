@@ -11,6 +11,7 @@ const New = () => {
   const nav = useNavigate();
   const onSubmit = (input) => {
     onCreate(input.createdDate.getTime(), input.emotionId, input.content);
+    nav("/", { replace: true });
   };
   return (
     <div>

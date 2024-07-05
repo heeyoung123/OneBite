@@ -17,7 +17,7 @@ import { useReducer, useRef, createContext } from "react";
 const mockData = [
   {
     id: 1,
-    createDate: new Date("2024-06-22").getTime(),
+    createDate: new Date("2024-07-22").getTime(),
     emotionId: 2,
     content: "일기당",
   },
@@ -63,12 +63,12 @@ function App() {
   // dispatch 함수를 호출하면서 이러한 액션 객체를 새롭게 추가하라는 의미로 전달을 해주게 되면
   // useReducer가 우리가 만든 이 reduce함수를 호출해서 매개 변수로는 설정한 액션 객체를 전달을 해주게 됨
 
-  const onCreate = (createdDate, emotionId, content) => {
+  const onCreate = (createDate, emotionId, content) => {
     dispatch({
       type: "CREATE",
       data: {
         id: idRef.current++,
-        createdDate,
+        createDate,
         emotionId,
         content,
       },
