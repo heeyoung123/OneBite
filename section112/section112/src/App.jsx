@@ -59,7 +59,6 @@ function App() {
   const [data, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(3);
 
-  // 새로운 일기 추가
   // 새로운 일기를 추가하는 기능
   // dispatch 함수를 호출하면서 이러한 액션 객체를 새롭게 추가하라는 의미로 전달을 해주게 되면
   // useReducer가 우리가 만든 이 reduce함수를 호출해서 매개 변수로는 설정한 액션 객체를 전달을 해주게 됨
