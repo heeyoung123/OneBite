@@ -2,21 +2,40 @@ import { useParams, useNavigate } from "react-router-dom";
 import Button from "../components/button";
 import Header from "../components/Header";
 import Editor from "../components/Editor";
-import { useContext } from "react";
-import { DiaryDispatchContext } from "../App";
+import { useContext, useEffect } from "react";
+import { DiaryDispatchContext, DiaryStateContext } from "../App";
 
 const Edit = () => {
   const { onDelete } = useContext(DiaryDispatchContext);
+  const params = useParams();
+  const nav = useNavigate();
+  const data = useContext(DiaryStateContext);
 
-  const { id } = useParams();
+  /** 일기데이터 불러오기*/
+  useEffect(() => {
+    const currentDiaryItem = data.find(
+      (item) => String(item.id) === String(params.id)
+    );
+    if (!currentDiaryItem) {
+      window.alert("잘못된 접근임.");
+      nav("/", { replace: true });
+    }
+    return currentDiaryItem;
+  }, [params.id, data]);
+
   const onClickDelete = () => {
+    //   if (confirm("삭제?")) {
+    //     onDelete(parmas.id);
+    //     nav("/", { replace: true });
+    //   }
+    // };
     let result = confirm("진짜 삭제?");
     if (result) {
-      onDelete(parseInt(id));
-      nav("/");
+      onDelete(params.id);
+      nav("/", { replace: true });
     }
   };
-  const nav = useNavigate();
+
   return (
     <div>
       <Header
