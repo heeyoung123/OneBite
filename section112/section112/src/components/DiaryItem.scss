@@ -1,3 +1,18 @@
+@mixin img_section_1_background {
+  background-color: rgb(100, 201, 100);
+}
+@mixin img_section_2_background {
+  background-color: rgb(157, 215, 114);
+}
+@mixin img_section_3_background {
+  background-color: rgb(253, 206, 23);
+}
+@mixin img_section_4_background {
+  background-color: rgb(253, 132, 70);
+}
+@mixin img_section_5_background {
+  background-color: rgb(253, 86, 95);
+}
 .DiaryItem {
   display: flex;
   gap: 15px;
@@ -29,19 +44,19 @@
     justify-content: center;
     cursor: pointer;
     &.img_section_1 {
-      background-color: rgb(100, 201, 100);
+      @include img_section_1_background;
     }
     &.img_section_2 {
-      background-color: rgb(157, 215, 114);
+      @include img_section_2_background;
     }
     &.img_section_3 {
-      background-color: rgb(253, 206, 23);
+      @include img_section_3_background;
     }
     &.img_section_4 {
-      background-color: rgb(253, 132, 70);
+      @include img_section_4_background;
     }
     &.img_section_5 {
-      background-color: rgb(253, 86, 95);
+      @include img_section_5_background;
     }
   }
 }

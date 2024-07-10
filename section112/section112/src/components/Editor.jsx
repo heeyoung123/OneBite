@@ -1,52 +1,38 @@
 import "./Editor.scss";
 import EmotionItem from "./EmotionItem";
 import Button from "./button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-const emotionList = [
-  {
-    emotionId: 1,
-    emotionName: "완전 좋음",
-  },
-  {
-    emotionId: 2,
-    emotionName: "좋음",
-  },
-  {
-    emotionId: 3,
-    emotionName: "그럭저럭",
-  },
-  {
-    emotionId: 4,
-    emotionName: "나쁨",
-  },
-  {
-    emotionId: 5,
-    emotionName: "끔찍함",
-  },
-];
-const getStringDate = (targetDate) => {
-  let year = targetDate.getFullYear();
-  let month = (targetDate.getMonth() + 1).toString().padStart(2, "0");
-  let date = targetDate.getDate().toString().padStart(2, "0");
+import { emotionList } from "../util/constants";
+import { getStringDate } from "../util/get-string-date";
 
-  return `${year}-${month}-${date}`;
-};
-const Editor = ({ onSubmit }) => {
+const Editor = ({ initData, onSubmit }) => {
   const [input, setInput] = useState({
-    createdDate: new Date(),
+    createDate: new Date(),
     emotionId: 3,
     content: "",
   });
+  /**initData가 변경될때마다 동작, initData가 있다면 initData를 setInput에 전달*/
+  useEffect(() => {
+    if (initData) {
+      setInput({
+        ...initData,
+        createDate: new Date(Number(initData.createDate)),
+      });
+    }
+  }, [initData]);
+
   const nav = useNavigate();
+
   const onClickSubmitButton = () => {
     onSubmit(input);
   };
+
   const onChangeInput = (e) => {
     let name = e.target.name;
     let value = e.target.value;
 
-    if (name === "createdDate") {
+    if (name === "createDate") {
       value = new Date(value);
     }
 
@@ -60,11 +46,11 @@ const Editor = ({ onSubmit }) => {
     <div className="Editor">
       <section className="date_section">
         <h4>오늘의 날짜</h4>
-        {/* input안에 있는 createdDate인 new Date()가 getStringDate메소드에 의해 문자열로 변환됨 */}
+        {/* input안에 있는 createDate인 new Date()가 getStringDate메소드에 의해 문자열로 변환됨 */}
         <input
           name="createDate"
           onChange={onChangeInput}
-          value={getStringDate(input.createdDate)}
+          value={getStringDate(input.createDate)}
           type="date"
         />
       </section>
